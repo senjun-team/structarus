@@ -6,11 +6,11 @@ project(
     structarus
     )
 
-option(STRUCTARUS_TEST "Enable tests compiling" OFF)
+option(STRUCTARUS_TEST "Enable tests compiling" ON)
 
 
 if(STRUCTARUS_TEST)
     enable_testing()
-    add_subdirectory(third_party/googletest)
+    add_subdirectory(third_party/googletest-v1.15.2)
     add_subdirectory(tests)
 endif()
