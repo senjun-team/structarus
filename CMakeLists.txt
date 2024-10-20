@@ -6,7 +6,7 @@ project(
     structarus
     )
 
-option(STRUCTARUS_TEST "Enable tests compiling" ON)
+option(STRUCTARUS_TEST "Enable tests compiling" OFF)
 
 
 if(STRUCTARUS_TEST)
