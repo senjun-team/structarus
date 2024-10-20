@@ -20,9 +20,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: install_requirements
-      run: sudo apt update && sudo apt install libboost-all-dev libcurl4-gnutls-dev libfmt-dev libgtest-dev iputils-ping
-    - name: setup_project
-      run: git submodule update --init --recursive
+      run: sudo apt update && sudo apt install libcurl4-gnutls-dev iputils-ping
     - name: configure_project
       run: cmake -S . -B build -DSTRUCTARUS_TEST=ON
     - name: build_project
