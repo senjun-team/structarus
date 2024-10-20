@@ -1,0 +1,31 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    services:
+      docker:
+        image: docker:dind
+        options: --privileged --shm-size=2g
+        ports:
+          - 2375:2375
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: install_requirements
+      run: sudo apt update && sudo apt install libboost-all-dev libcurl4-gnutls-dev libfmt-dev libgtest-dev iputils-ping
+    - name: setup_project
+      run: git submodule update --init --recursive
+    - name: configure_project
+      run: cmake -S . -B build -DSTRUCTARUS_TEST=ON
+    - name: build_project
+      run: cmake --build build -- -j4
+    - name: run_tests
+      run: cd build && ctest --output-on-failure
