@@ -1,6 +1,6 @@
 #pragma once
 
-#include "common/tar/detail/header.hpp"
+#include "header.hpp"
 #include "consts.hpp"
 
 #include <algorithm>
