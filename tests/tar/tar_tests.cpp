@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "include/structarus/detail/header.hpp"
+#include "include/structarus/tar_creator.hpp"
 
 using namespace tar;
 
@@ -23,4 +23,10 @@ TEST(TarHeader, BasicConstruction) {
     EXPECT_EQ(header.devminor.size(), 8u);
     EXPECT_EQ(header.prefix.size(), 155u);
     EXPECT_EQ(header.padding.size(), 12u);  // Adjusted size to match the actual padding size
+}
+
+TEST(Tar, Dummy) {
+    std::string result;
+    tar::Creator<std::ofstream> creator(result);
+    creator.addFile({"sqwoz", "bab"});
 }
