@@ -1,7 +1,9 @@
 #include <filesystem>
 #include <gtest/gtest.h>
+#include <sstream>
 
 #include "include/structarus/tar_creator.hpp"
+#include "include/structarus/tar_info.hpp"
 
 using namespace tar;
 namespace fs = std::filesystem;
@@ -29,10 +31,31 @@ TEST(TarHeader, BasicConstruction) {
 }
 
 TEST(Tar, Dummy) {
-  std::string filename{"altushka"};
+  std::string filename{"altushka.tar"};
   {
+    // Note: creator destructor is needed
     tar::Creator<std::ofstream> creator(filename);
-    creator.addFile({"sqwoz", "bab"});
+    creator.addFile({"sqwoz.txt", "bab"});
   }
   fs::remove(filename);
+}
+
+TEST(Tar, Example) {
+
+  // filename must contain absolute path indise tar
+  // e.g. my/awesome/file.txt
+  using FilenameAndData = std::pair<std::string, std::string>;
+  std::vector<FilenameAndData> files{{"first/file.cpp", "#include <iostream>"},
+                                     {"second/file.py", "import os"}};
+
+  std::string inMemoryTar;
+  {
+    // Note: creator destructor is needed
+    tar::Creator<std::ostringstream> creator(inMemoryTar);
+    for (auto const &file : files) {
+      creator.addFile({file.first, file.second, tar::FileType::RegularFile});
+    }
+  }
+
+  ASSERT_FALSE(inMemoryTar.empty());
 }

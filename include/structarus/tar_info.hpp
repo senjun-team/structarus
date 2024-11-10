@@ -18,8 +18,8 @@ enum class FileType {
 };
 
 struct FileInfo {
-    std::string const & archiveName;  /// name of the file to write in tar
-    std::string const & data;         /// data for writing
+    std::string const & filename;  /// name of the file to write in tar
+    std::string const & data;      /// data for writing
     FileType fileType = FileType::RegularFile;
     Filemode filemode = Filemode::ReadWriteExecute;
     uint64_t mtime = 0;          /// file modification time, in seconds since epoch
